@@ -1,10 +1,16 @@
 import _ from "lodash";
 import "./style.css";
-
+import { format, isToday } from "date-fns";
+import { staticLoad } from "./staticLoad";
+// ///////////////////////////////////////////
 const search_input = document.querySelector("#search_cont");
 const search_btn = document.querySelector("#search_btn");
 const form = document.querySelector("#form");
 
+///////////////////////////////////////////////
+staticLoad();
+
+///////////////////////////////
 async function getInfo() {
   const response = await fetch(
     `http://api.weatherapi.com/v1/forecast.json?key=105d9db29b9245eeb2491919240704&q=${search_input.value}&days=7&aqi=no&alerts=no`
@@ -12,8 +18,8 @@ async function getInfo() {
   const weatherInfo = await response.json();
   const LocInfo = parseInfoLoc(weatherInfo);
   const todayInfo = parseInfoToday(weatherInfo);
-  console.log(LocInfo);
-  console.log(todayInfo);
+  const weekInfo = parseInfoWeek(weatherInfo);
+  console.log(weekInfo, "hey");
   console.log(weatherInfo);
 }
 
@@ -41,11 +47,37 @@ function parseInfoToday(weatherInfo) {
 }
 
 function parseInfoWeek(weatherInfo) {
+  const week = [];
+
   for (let i = 0; i < weatherInfo.forecast.forecastday.length; i++) {
-    return {
-      WeekdayDate: weatherInfo.forecast.forecastday[i].date,
-      ConditionWeekday: weatherInfo.forecast.forecastday[i].condition.text,
-      ConditionWeekdayIcon: weatherInfo.forecast.forecastday[i].condition.icon,
+    const date = new Date(weatherInfo.forecast.forecastday[i].date);
+    let dayOfWeek = format(date, "EEEE");
+
+    if (isToday(date)) {
+      dayOfWeek = "Today";
+    }
+
+    const weekdayInfo = {
+      WeekdayDay: dayOfWeek,
+      ConditionWeekday: weatherInfo.forecast.forecastday[i].day.condition.text,
+      ConditionWeekdayIcon:
+        weatherInfo.forecast.forecastday[i].day.condition.icon,
+      WeekdayMax: weatherInfo.forecast.forecastday[i].day.maxtemp_c,
+      WeekdayMin: weatherInfo.forecast.forecastday[i].day.mintemp_c,
+      WeekdayAvg: weatherInfo.forecast.forecastday[i].day.avgtemp_c,
+      WeekdayRain: weatherInfo.forecast.forecastday[i].day.daily_chance_of_rain,
+      WeekdayMorningConditionText:
+        weatherInfo.forecast.forecastday[i].hour[10].condition.text,
+      WeekdayMorningConditionIcon:
+        weatherInfo.forecast.forecastday[i].hour[10].condition.icon,
+      WeekdayNightConditionText:
+        weatherInfo.forecast.forecastday[i].hour[20].condition.text,
+      WeekdayNightConditionIcon:
+        weatherInfo.forecast.forecastday[i].hour[20].condition.icon,
     };
+
+    week.push(weekdayInfo);
   }
+
+  return week;
 }
