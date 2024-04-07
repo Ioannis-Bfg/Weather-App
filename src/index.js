@@ -2,24 +2,23 @@ import _ from "lodash";
 import "./style.css";
 import { format, isToday } from "date-fns";
 import { staticLoad } from "./staticLoad";
+import { contentLoad } from "./contentLoad";
 // ///////////////////////////////////////////
-const search_input = document.querySelector("#search_cont");
-const search_btn = document.querySelector("#search_btn");
-const form = document.querySelector("#form");
 
 ///////////////////////////////////////////////
 staticLoad();
-
+const search_input = document.querySelector("#search_cont");
+const search_btn = document.querySelector("#search_btn");
+const form = document.querySelector("#form");
 ///////////////////////////////
 async function getInfo() {
   const response = await fetch(
     `http://api.weatherapi.com/v1/forecast.json?key=105d9db29b9245eeb2491919240704&q=${search_input.value}&days=7&aqi=no&alerts=no`
   );
   const weatherInfo = await response.json();
-  const LocInfo = parseInfoLoc(weatherInfo);
-  const todayInfo = parseInfoToday(weatherInfo);
-  const weekInfo = parseInfoWeek(weatherInfo);
-  console.log(weekInfo, "hey");
+  const Info = parseInfo(weatherInfo);
+  contentLoad(Info);
+  console.log(Info, "hey");
   console.log(weatherInfo);
 }
 
@@ -28,25 +27,7 @@ form.addEventListener("submit", (event) => {
   getInfo();
 });
 
-function parseInfoLoc(weatherInfo) {
-  return {
-    CityName: weatherInfo.location.name,
-    CountryName: weatherInfo.location.country,
-  };
-}
-
-function parseInfoToday(weatherInfo) {
-  return {
-    DateToday: weatherInfo.forecast.forecastday[0].date,
-    ConditionToday: weatherInfo.current.condition.text,
-    ConditionTodayIcon: weatherInfo.current.condition.icon,
-    TempToday: weatherInfo.current.temp_c,
-    TempTodayMax: weatherInfo.forecast.forecastday[0].day.maxtemp_c,
-    TempTodayMin: weatherInfo.forecast.forecastday[0].day.mintemp_c,
-  };
-}
-
-function parseInfoWeek(weatherInfo) {
+function parseInfo(weatherInfo) {
   const week = [];
 
   for (let i = 0; i < weatherInfo.forecast.forecastday.length; i++) {
@@ -79,5 +60,19 @@ function parseInfoWeek(weatherInfo) {
     week.push(weekdayInfo);
   }
 
-  return week;
+  return {
+    Location: {
+      CityName: weatherInfo.location.name,
+      CountryName: weatherInfo.location.country,
+    },
+    Today: {
+      DateToday: weatherInfo.forecast.forecastday[0].date,
+      ConditionToday: weatherInfo.current.condition.text,
+      ConditionTodayIcon: weatherInfo.current.condition.icon,
+      TempToday: weatherInfo.current.temp_c,
+      TempTodayMax: weatherInfo.forecast.forecastday[0].day.maxtemp_c,
+      TempTodayMin: weatherInfo.forecast.forecastday[0].day.mintemp_c,
+    },
+    week,
+  };
 }
