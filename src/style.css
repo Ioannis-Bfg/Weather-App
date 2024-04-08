@@ -1,9 +1,19 @@
+* {
+  font-family: "Roboto", sans-serif;
+}
+
+:root {
+  --main: #007bff;
+}
+/* //////////////// */
+
 #container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 0% 10%;
+  font-family: inherit;
 }
 
 #header {
@@ -14,11 +24,116 @@
   height: 10vh;
 }
 
+#header p {
+  font-size: 2em;
+  color: #007bff;
+  font-weight: 600;
+  font-family: "Roboto";
+  letter-spacing: 2px;
+}
+
 #header svg {
-  height: 30px;
+  height: 50px;
+  fill: #007bff;
 }
 #weather_cont {
-  height: 90vh;
-  border: 10px solid black;
   width: 100%;
+  display: grid;
+  grid-template-rows: 4fr 6fr;
+  font-family: "Roboto";
+}
+
+#hero {
+  display: grid;
+  height: 100%;
+  grid-template-columns: 1fr 1fr;
+}
+
+#hero_icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 5%;
+}
+
+#forecast {
+  display: flex;
+  flex-direction: column;
+  padding: 1% 2%;
+  gap: 5px;
+  height: 100%;
+}
+
+#forecast svg {
+  width: 20px;
+  height: 20px;
+}
+
+#card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 20px;
+  padding: 1% 4%;
+  background-color: var(--main);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  color: white;
+}
+
+#day_water {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+#day_info {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+#day_info img {
+  width: 30px;
+  height: 30px;
+}
+#precipitation_div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: rgb(255, 255, 255, 0.6);
+}
+
+#precipitation_div svg {
+  fill: rgb(255, 255, 255, 0.6);
+}
+
+/* ////////////// FORM///////// */
+
+#form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#search_cont {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+#search_btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#search_btn:hover {
+  background-color: #0056b3;
 }

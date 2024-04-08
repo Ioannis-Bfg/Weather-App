@@ -3,6 +3,7 @@ import "./style.css";
 import { format, isToday } from "date-fns";
 import { staticLoad } from "./staticLoad";
 import { contentLoad } from "./contentLoad";
+import "./reset.css";
 // ///////////////////////////////////////////
 
 ///////////////////////////////////////////////
@@ -12,8 +13,11 @@ const search_btn = document.querySelector("#search_btn");
 const form = document.querySelector("#form");
 ///////////////////////////////
 async function getInfo() {
+  // const response = await fetch(
+  //   `http://api.weatherapi.com/v1/forecast.json?key=105d9db29b9245eeb2491919240704&q=${search_input.value}&days=7&aqi=no&alerts=no`
+  // );
   const response = await fetch(
-    `http://api.weatherapi.com/v1/forecast.json?key=105d9db29b9245eeb2491919240704&q=${search_input.value}&days=7&aqi=no&alerts=no`
+    `http://api.weatherapi.com/v1/forecast.json?key=105d9db29b9245eeb2491919240704&q=London&days=7&aqi=no&alerts=no`
   );
   const weatherInfo = await response.json();
   const Info = parseInfo(weatherInfo);
