@@ -30,7 +30,7 @@ search_input.addEventListener("input", async () => {
   if (inputValue.length >= 3) {
     // Check if input length is sufficient for search
     const response = await fetch(
-      `http://api.weatherapi.com/v1/search.json?key=105d9db29b9245eeb2491919240704&q=${inputValue}`
+      `https://api.weatherapi.com/v1/search.json?key=105d9db29b9245eeb2491919240704&q=${inputValue}`
     );
     const cities = await response.json();
     showDropdown(cities);
@@ -62,7 +62,7 @@ function hideDropdown() {
 
 async function getInfo() {
   const response = await fetch(
-    `http://api.weatherapi.com/v1/forecast.json?key=105d9db29b9245eeb2491919240704&q=${search_input.value}&days=7&aqi=no&alerts=no`
+    `https://api.weatherapi.com/v1/forecast.json?key=105d9db29b9245eeb2491919240704&q=${search_input.value}&days=7&aqi=no&alerts=no`
   );
   const weatherInfo = await response.json();
   const Info = parseInfo(weatherInfo);
