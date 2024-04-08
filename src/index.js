@@ -67,8 +67,6 @@ async function getInfo() {
   const weatherInfo = await response.json();
   const Info = parseInfo(weatherInfo);
   contentLoad(Info);
-  console.log(Info, "hey");
-  console.log(weatherInfo);
 }
 
 form.addEventListener("submit", (event) => {
