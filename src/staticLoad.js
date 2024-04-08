@@ -11,9 +11,11 @@ export function staticLoad() {
           />
         </svg>
       </div>
-      <form id="form">
+      <form id="form" autocomplete="off">
         <input type="search" id="search_cont" />
         <button type="submit" id="search_btn">Search</button>
+        <div id="dropdown" class="dropdown-content">
+        </div>
       </form>
       <div id="weather_cont"></div>
       `;
