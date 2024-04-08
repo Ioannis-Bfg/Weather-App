@@ -5,9 +5,9 @@ import { staticLoad } from "./staticLoad";
 import { contentLoad } from "./contentLoad";
 import "./reset.css";
 // ///////////////////////////////////////////
-
-///////////////////////////////////////////////
 staticLoad();
+///////////////////////////////////////////////
+
 const header = document.getElementById("header");
 const content = document.getElementById("content");
 const search_input = document.querySelector("#search_cont");
@@ -74,6 +74,7 @@ async function getInfo() {
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   getInfo();
+
   form.reset();
   hideDropdown();
 });
